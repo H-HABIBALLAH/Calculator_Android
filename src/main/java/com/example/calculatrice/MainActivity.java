@@ -5,24 +5,40 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    Button btnClicked;
+    Boolean firstClick = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        addStyle();
     }
 
     void collapseCollumns(){
     }
 
     void addStyle(){
-        for(int i=1;i<=7;i++){
-            View operators = findViewById(R.id.op1);
-            operators.setBackgroundColor(Color.GRAY);
+
+    }
+
+    public void buttonClicked(View view) {
+        btnClicked = (Button)view;
+        String btnText = (String) btnClicked.getText();
+        modifyExpression();
+    }
+
+    private void modifyExpression() {
+        TextView expression = findViewById(R.id.expression);
+        if(firstClick){
+            expression.setText("");
+            firstClick = false;
         }
+        if(btnClicked.getId() == "@+id/btnAC")
+        expression.setText((String)expression.getText()+ (String)btnClicked.getText());
     }
 }
