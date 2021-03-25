@@ -27,12 +27,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    void collapseCollumns(){
-    }
-
-    void addStyle(){
-
-    }
 
     public void buttonClicked(View view) {
         btnClicked = (Button)view;
@@ -41,8 +35,10 @@ public class MainActivity extends AppCompatActivity {
             prepareInteger();
         else if(btnClicked.getText().equals("=")) {
             pushToNumbersStack();
+            if(!operatorsStack.isEmpty() && (operatorsStack.peek().equals("*") || operatorsStack.peek().equals("/")))
+                evaluatePrecedence();
             result = evaluate();
-            System.out.println(result);
+            printResult();
         }
         else{
             pushToNumbersStack();
@@ -51,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
                 evaluatePrecedence();
             pushToOperatorsStack();
         }
+    }
+
+    private void printResult() {
+        expression.setText((CharSequence)(expression.getText()+String.valueOf(result)));
     }
 
     private void evaluatePrecedence() {
